@@ -106,10 +106,10 @@ public class Visitor extends calcBaseVisitor<Void>{
                 else {
                     if(bnum==rank&&bnum!=1){
                         bnum++;
-                        results+="br i1 %"+(Num-1)+", label %b"+bnum+",\n";
+                        results+="br i1 %"+(Num-1)+", label %b"+bnum;
                     }
                     else {
-                        results+="br i1 %"+(Num-1)+", label %b"+bnum+",\n";
+                        results+="br i1 %"+(Num-1)+", label %b"+bnum;
                         bnum+=1;
                     }
                 }
@@ -123,6 +123,9 @@ public class Visitor extends calcBaseVisitor<Void>{
                         l=l.stmt(1);
                     }
                 }
+            }
+            if(ctx.stmt().size()==1){
+                results+=", %b"+rank+"\n";
             }
             results+="b"+t+":\n";
             t++;
