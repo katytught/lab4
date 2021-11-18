@@ -83,8 +83,6 @@ public class Visitor extends calcBaseVisitor<Void>{
         }
         else if(ctx.block()!=null){
             visit(ctx.block());
-//            System.out.println("stmt->block");
-//            results+="br label %b"+rank+"\n";
         }
         else if(ctx.getText().startsWith("if")){
 //            flagif=false;
@@ -99,37 +97,24 @@ public class Visitor extends calcBaseVisitor<Void>{
                 Num++;
             }
                 if(ctx.stmt().size()==2){
-//                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
-//                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
-//                        Register reg = new Register();
-//                        reg.setName("%"+Num);
-//                        reg.setNum(Num);
-//                        reg.setType("i1");
-//                        Reglist.getInstance().add(reg);
-//                        Num++;
-//                    }
+                    if(bnum==rank&&bnum!=1){
+                        bnum++;
+                    }
                     results+="br i1 %"+(Num-1)+", label %b"+bnum+", label %b"+(bnum+1)+"\n";
                     bnum+=2;
                 }
                 else {
-                    if(bnum==rank){
+                    if(bnum==rank&&bnum!=1){
                         bnum++;
+                        results+="br i1 %"+(Num-1)+", label %b"+bnum+"\n";
                     }
-//                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
-//                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
-//                        Register reg = new Register();
-//                        reg.setName("%"+Num);
-//                        reg.setNum(Num);
-//                        reg.setType("i1");
-//                        Reglist.getInstance().add(reg);
-//                        Num++;
-//                    }
-                    results+="br i1 %"+(Num-1)+", label %b"+bnum+"\n";
-                    bnum+=1;
+                    else {
+                        results+="br i1 %"+(Num-1)+", label %b"+bnum+"\n";
+                        bnum+=1;
+                    }
                 }
             if(rank==1){
                 rank=bnum;
-//                System.out.println("bnum="+bnum);
                 calcParser.StmtContext l=null;
                 if(ctx.stmt().size()>1){
                     l = ctx.stmt(1);
@@ -174,6 +159,7 @@ public class Visitor extends calcBaseVisitor<Void>{
 
             String s=visitExp(ctx.exp());
             results+="ret i32 "+s+"\n";
+            Num++;
         }
         else {
             if(ctx.exp()!=null){
