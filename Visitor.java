@@ -188,7 +188,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                 String left=visitAddexp(ctx.addexp());
                 String right=visitMulexp(ctx.mulexp());
                 if(Objects.equals(ctx.Addfunc().getText(), "+")){
-                    if(Reglist.getInstance().getreg(left).getType().equals("i1")){
+                    if(left.startsWith("%")&&Reglist.getInstance().getreg(left).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         left = "%"+Num;
@@ -198,7 +198,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                         Reglist.getInstance().add(reg);
                         Num++;
                     }
-                    if(Reglist.getInstance().getreg(right).getType().equals("i1")){
+                    if(right.startsWith("%")&&Reglist.getInstance().getreg(right).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         right = "%"+Num;
@@ -219,7 +219,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                     return "%"+(Num-1);
                 }
                 else if(Objects.equals(ctx.Addfunc().getText(), "-")){
-                    if(Reglist.getInstance().getreg(left).getType().equals("i1")){
+                    if(left.startsWith("%")&&Reglist.getInstance().getreg(left).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         left = "%"+Num;
@@ -229,7 +229,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                         Reglist.getInstance().add(reg);
                         Num++;
                     }
-                    if(Reglist.getInstance().getreg(right).getType().equals("i1")){
+                    if(right.startsWith("%")&&Reglist.getInstance().getreg(right).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         right = "%"+Num;
@@ -264,7 +264,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                 String left=visitMulexp(ctx.mulexp());
                 String right=visitUnaryexp(ctx.unaryexp());
                 if(ctx.Mulfunc().getText().equals("*")){
-                    if(Reglist.getInstance().getreg(left).getType().equals("i1")){
+                    if(left.startsWith("%")&&Reglist.getInstance().getreg(left).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         left = "%"+Num;
@@ -274,7 +274,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                         Reglist.getInstance().add(reg);
                         Num++;
                     }
-                    if(Reglist.getInstance().getreg(right).getType().equals("i1")){
+                    if(right.startsWith("%")&&Reglist.getInstance().getreg(right).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         right = "%"+Num;
@@ -295,7 +295,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                     return "%"+(Num-1);
                 }
                 else if(ctx.Mulfunc().getText().equals("/")) {
-                    if(Reglist.getInstance().getreg(left).getType().equals("i1")){
+                    if(left.startsWith("%")&&Reglist.getInstance().getreg(left).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         left = "%"+Num;
@@ -305,7 +305,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                         Reglist.getInstance().add(reg);
                         Num++;
                     }
-                    if(Reglist.getInstance().getreg(right).getType().equals("i1")){
+                    if(right.startsWith("%")&&Reglist.getInstance().getreg(right).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         right = "%"+Num;
@@ -326,7 +326,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                     return "%" + (Num - 1);
                 }
                 else if(ctx.Mulfunc().getText().equals("%")) {
-                    if(Reglist.getInstance().getreg(left).getType().equals("i1")){
+                    if(left.startsWith("%")&&Reglist.getInstance().getreg(left).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         left = "%"+Num;
@@ -336,7 +336,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                         Reglist.getInstance().add(reg);
                         Num++;
                     }
-                    if(Reglist.getInstance().getreg(right).getType().equals("i1")){
+                    if(right.startsWith("%")&&Reglist.getInstance().getreg(right).getType().equals("i1")){
                         results+="%"+Num+" = "+"zext i1 %"+(Num-1)+" to i32\n";
                         Register reg = new Register();
                         right = "%"+Num;
