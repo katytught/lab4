@@ -89,6 +89,15 @@ public class Visitor extends calcBaseVisitor<Void>{
         else if(ctx.getText().startsWith("if")){
 //            flagif=false;
             visit(ctx.cond());
+            if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
+                results+="%"+Num+" = icmp ne "+Reglist.getInstance().getreg("%"+(Num-1)).getType() +" %" + (Num-1) + ", 0"+ "\n";
+                Register reg = new Register();
+                reg.setName("%"+Num);
+                reg.setNum(Num);
+                reg.setType("i1");
+                Reglist.getInstance().add(reg);
+                Num++;
+            }
                 if(ctx.stmt().size()==2){
 //                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
 //                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
