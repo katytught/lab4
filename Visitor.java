@@ -7,7 +7,7 @@ public class Visitor extends calcBaseVisitor<Void>{
     public int bnum=1;
     public int rank=1;
     public int t=1;
-//    public boolean flagif=false;
+    public boolean flagif=true;
     public boolean isconst=false;
     static Integer getnumber(String s){
         int res = 0;
@@ -79,13 +79,16 @@ public class Visitor extends calcBaseVisitor<Void>{
             }
             list.getVar(ctx.lval().getText()).setInit(true);
             results+="store i32 "+s+", i32* "+ list.getVar(ctx.lval().getText()).getNum()+"\n";
-//            System.out.println("exp="+s);
         }
         else if(ctx.block()!=null){
             visit(ctx.block());
         }
         else if(ctx.getText().startsWith("if")){
-//            flagif=false;
+            boolean thi=false;
+            if(flagif==true){
+                thi=true;
+                flagif=false;
+            }
             visit(ctx.cond());
             if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
                 results+="%"+Num+" = icmp ne "+Reglist.getInstance().getreg("%"+(Num-1)).getType() +" %" + (Num-1) + ", 0"+ "\n";
@@ -133,7 +136,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                 t++;
             }
             visit(ctx.stmt(0));
-            if(!results.endsWith(":\n")){
+            if(!results.endsWith(":\n")&&!results.endsWith("br label %b"+rank+"\n")){
                 results+="br label %b"+rank+"\n";
             }
             if(ctx.stmt().size()>=2){
@@ -143,17 +146,15 @@ public class Visitor extends calcBaseVisitor<Void>{
                     t++;
                 }
                 visit(ctx.stmt(1));
-                if(!results.endsWith(":\n")){
+                if(!results.endsWith(":\n")&&!results.endsWith("br label %b"+rank+"\n")){
                     results+="br label %b"+rank+"\n";
                 }
-                if(rank==0){
-//                    rank=bnum;
-                    bnum++;
-                }
             }
-            if(!results.endsWith(":\n")){results += "b"+rank+":\n";
+            if(!results.endsWith(":\n")&& thi){
+                results += "b"+rank+":\n";
                 rank=1;
                 bnum++;
+                flagif=true;
             }
 
 //            results+="b"+rank+":\n";
@@ -739,11 +740,11 @@ public class Visitor extends calcBaseVisitor<Void>{
 //                    flagif=true;
                 }
                 else if(ctx.Comfunc().getText().equals("<")){
-                    results+="%"+Num+" = icmp lt i32 " + s1 + ", "+ s2 + "\n";
+                    results+="%"+Num+" = icmp slt i32 " + s1 + ", "+ s2 + "\n";
 //                    flagif=true;
                 }
                 else if(ctx.Comfunc().getText().equals(">")){
-                    results+="%"+Num+" = icmp gt i32 " + s1 + ", "+ s2 + "\n";
+                    results+="%"+Num+" = icmp sgt i32 " + s1 + ", "+ s2 + "\n";
 //                    flagif=true;
                 }
 //                results+="br i1 %"+Num+", label %b"+bnum+", label %b"+(bnum+1)+"\n";
