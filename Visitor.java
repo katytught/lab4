@@ -125,7 +125,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                 }
             }
             if(ctx.stmt().size()==1){
-                results+=", %b"+rank+"\n";
+                results+=", label %b"+rank+"\n";
             }
             results+="b"+t+":\n";
             t++;
