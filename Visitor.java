@@ -106,10 +106,10 @@ public class Visitor extends calcBaseVisitor<Void>{
                 else {
                     if(bnum==rank&&bnum!=1){
                         bnum++;
-                        results+="br i1 %"+(Num-1)+", label %b"+bnum+"\n";
+                        results+="br i1 %"+(Num-1)+", label %b"+bnum+",\n";
                     }
                     else {
-                        results+="br i1 %"+(Num-1)+", label %b"+bnum+"\n";
+                        results+="br i1 %"+(Num-1)+", label %b"+bnum+",\n";
                         bnum+=1;
                     }
                 }
