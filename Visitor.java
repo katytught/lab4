@@ -90,15 +90,15 @@ public class Visitor extends calcBaseVisitor<Void>{
 //            flagif=false;
             visit(ctx.cond());
                 if(ctx.stmt().size()==2){
-                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
-                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
-                        Register reg = new Register();
-                        reg.setName("%"+Num);
-                        reg.setNum(Num);
-                        reg.setType("i1");
-                        Reglist.getInstance().add(reg);
-                        Num++;
-                    }
+//                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
+//                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
+//                        Register reg = new Register();
+//                        reg.setName("%"+Num);
+//                        reg.setNum(Num);
+//                        reg.setType("i1");
+//                        Reglist.getInstance().add(reg);
+//                        Num++;
+//                    }
                     results+="br i1 %"+(Num-1)+", label %b"+bnum+", label %b"+(bnum+1)+"\n";
                     bnum+=2;
                 }
@@ -106,15 +106,15 @@ public class Visitor extends calcBaseVisitor<Void>{
                     if(bnum==rank){
                         bnum++;
                     }
-                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
-                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
-                        Register reg = new Register();
-                        reg.setName("%"+Num);
-                        reg.setNum(Num);
-                        reg.setType("i1");
-                        Reglist.getInstance().add(reg);
-                        Num++;
-                    }
+//                    if(Reglist.getInstance().getreg("%"+(Num-1)).getType().equals("i32")){
+//                        results+="%"+Num+" = "+"zext i32 %"+(Num-1)+" to i1\n";
+//                        Register reg = new Register();
+//                        reg.setName("%"+Num);
+//                        reg.setNum(Num);
+//                        reg.setType("i1");
+//                        Reglist.getInstance().add(reg);
+//                        Num++;
+//                    }
                     results+="br i1 %"+(Num-1)+", label %b"+bnum+"\n";
                     bnum+=1;
                 }
