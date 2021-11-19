@@ -410,7 +410,7 @@ public class Visitor extends calcBaseVisitor<Void>{
                     return "%"+(Num-1);
                 }
                 else if(ctx.Addfunc().getText().equals("!")){
-                    results+="%"+Num+" = icmp ne "+Reglist.getInstance().getreg("%"+(Num-1)).getType() +" %" + (Num-1) + ", 0"+ "\n";
+                    results+="%"+Num+" = icmp eq "+Reglist.getInstance().getreg("%"+(Num-1)).getType() +" %" + (Num-1) + ", 0"+ "\n";
                     Register reg = new Register();
                     reg.setName("%"+Num);
                     reg.setNum(Num);
